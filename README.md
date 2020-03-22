@@ -30,3 +30,5 @@ https://bootstrap-vue.js.org/docs
 https://alligator.io/vuejs/vue-chart-js/
 
 https://www.codecademy.com/forum_questions/535061fc52f86345af0000fe
+
+https://www.tutorialspoint.com/How-do-I-add-a-simple-onClick-event-handler-to-an-HTML5-canvas-element
