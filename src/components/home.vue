@@ -3,6 +3,7 @@
     <canvas id="game-board" @mousedown="boxClicked"></canvas>
     <b-modal id="win-modal">Congratulations, you won! Click okay to play again!</b-modal>
     <b-modal id="game-over-modal">Game over! click okay to play again!</b-modal>
+    <b-modal id="maximum-attempts-modal">You can keep playing but you won't get any credits!</b-modal>
   </div>
 </template>
 
@@ -12,7 +13,6 @@ export default {
   data: function() {
     return {
       squares: [[], [], [], [], [], [], [], [], []],
-      clickCount: [0, 0, 0, 0, 0, 0, 0, 0, 0],
       characters: ["", "", "", "", "", "", "", "", ""],
       xCoordinate: 0,
       yCoordinate: 0,
@@ -92,7 +92,6 @@ export default {
             this.checkwin();
             this.checkGameOver();
           }
-          this.clickCount[i]++;
           break;
         }
       }
@@ -196,6 +195,18 @@ export default {
   },
   mounted() {
     this.drawBoard();
+  },
+  computed: {
+    total: function() {
+      return this.winningCount + this.lossCount;
+    }
+  },
+  watch: {
+    total: function() {
+      if (this.total == 10) {
+        this.$bvModal.show("maximum-attempts-modal");
+      }
+    }
   }
 };
 </script>

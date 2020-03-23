@@ -1,3 +1,6 @@
+/**
+ * Ueed to store metadata to draw the graph
+ */
 export const winningStatistics = {
     type: 'bar',
     data: {

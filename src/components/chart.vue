@@ -45,7 +45,9 @@ export default {
       this.updatedWinCount = this.$props.winCount;
       this.winningStatistics.data.datasets[0].data[1] = this.updatedWinCount;
       this.winningStatistics.data.datasets[0].data[0] =
-        10 - (this.updatedLossCount + this.updatedWinCount);
+        10 - (this.updatedLossCount + this.updatedWinCount) > 0
+          ? 10 - (this.updatedLossCount + this.updatedWinCount)
+          : 0;
       this.formChart(this.winningStatistics);
     }
   }

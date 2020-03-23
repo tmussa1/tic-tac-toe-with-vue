@@ -1,38 +1,30 @@
-# tic-tac-toe
+# Project 1
++ By: Tofik Mussa
++ Production URL: http://157.245.130.35@tofikmussa.me/
 
-## Project setup
-```
-npm install
-```
+## Outside resources
+The following references below have been used for a usccessful completion of the project
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+![Bootstrap Vue](https://bootstrap-vue.js.org/docs)
 
-### Compiles and minifies for production
-```
-npm run build
-```
+![Chart Js tutorial](https://alligator.io/vuejs/vue-chart-js/)
 
-### Lints and fixes files
-```
-npm run lint
-```
+![How to handle clicks on canvas](https://www.tutorialspoint.com/How-do-I-add-a-simple-onClick-event-handler-to-an-HTML5-canvas-element)
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+![COmmunication between Vue sibling components](https://forum.vuejs.org/t/communication-between-sibling-components/29976/2)
 
-Sources used
+![How to access prop value in a method](https://forum.vuejs.org/t/accessing-prop-value-in-created-method/26630)
 
-https://bootstrap-vue.js.org/docs
+![How to listen to prop changes](https://stackoverflow.com/questions/44584292/how-to-listen-for-props-changes)
 
-https://alligator.io/vuejs/vue-chart-js/
+![How to watch computed properties](https://stackoverflow.com/questions/41067378/watching-computed-properties)
 
-https://www.codecademy.com/forum_questions/535061fc52f86345af0000fe
+## Notes for instructor
+Tic-Tac-Toe
 
-https://www.tutorialspoint.com/How-do-I-add-a-simple-onClick-event-handler-to-an-HTML5-canvas-element
-
-https://forum.vuejs.org/t/communication-between-sibling-components/29976/2
-
-https://forum.vuejs.org/t/accessing-prop-value-in-created-method/26630
+SImple game built with Vue. Js framework
+Enter a valid name to start playing
+After each iteration of the game, you will see your statistics reflected on the left
+You will see your win to loss ration and total number of attempts
+After playing 10 times, you will be playing free of credit
+Your name is also reflected on the left side. We will be supporting multiplayers in the future
