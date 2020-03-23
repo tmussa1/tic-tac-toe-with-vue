@@ -26,9 +26,9 @@
       <NavBarComponent v-bind:username="username" />
       <b-container id="gameContainer">
         <b-row>
-          <Home />
+          <Home v-on:update-win="updateWin($event)" v-on:update-loss="updateLoss($event)" />
           <div id="spacer2"></div>
-          <ChartComponent />
+          <ChartComponent v-bind:winCount="winCount" v-bind:lossCount="lossCount"/>
         </b-row>
       </b-container>
     </div>
@@ -52,7 +52,9 @@ export default {
       isAuthenticated: false,
       username: "",
       showAlert: false,
-      alertFailure: "alert alert-danger col-md-12"
+      alertFailure: "alert alert-danger col-md-12",
+      winCount: 0,
+      lossCount: 0
     };
   },
   methods: {
@@ -65,6 +67,12 @@ export default {
         this.showAlert = true;
         document.getElementById("playButton").disabled = true;
       }
+    },
+    updateWin: function(winCount) {
+      this.winCount = winCount;
+    },
+    updateLoss: function(lossCount) {
+      this.lossCount = lossCount;
     }
   },
   watch: {

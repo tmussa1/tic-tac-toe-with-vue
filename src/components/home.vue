@@ -1,6 +1,8 @@
 <template>
   <div id="board">
     <canvas id="game-board" @mousedown="boxClicked"></canvas>
+    <b-modal id="win-modal">Congratulations, you won! Click okay to play again!</b-modal>
+    <b-modal id="game-over-modal">Game over! click okay to play again!</b-modal>
   </div>
 </template>
 
@@ -14,7 +16,9 @@ export default {
       characters: ["", "", "", "", "", "", "", "", ""],
       xCoordinate: 0,
       yCoordinate: 0,
-      won: false
+      won: false,
+      winningCount: 0,
+      lossCount: 0
     };
   },
   methods: {
@@ -134,7 +138,9 @@ export default {
       this.checkDiagonalWins(2);
 
       if (this.won) {
-        alert("Congratulations, you won");
+        this.$bvModal.show("win-modal");
+        this.winningCount += 1;
+        this.$emit("update-win", this.winningCount);
         this.clearCanvas();
         this.drawBoard();
       }
@@ -180,7 +186,9 @@ export default {
         }
       }
       if (filledCount > 8 && !this.won) {
-        alert("Game over, you lost! Click 'Okay' to play again");
+        this.$bvModal.show("game-over-modal");
+        this.lossCount += 1;
+        this.$emit("update-loss", this.lossCount);
         this.clearCanvas();
         this.drawBoard();
       }
