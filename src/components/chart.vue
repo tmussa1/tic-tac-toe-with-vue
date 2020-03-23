@@ -19,6 +19,9 @@ export default {
     };
   },
   methods: {
+    /**
+     * Draws the initial chart
+     */
     formChart: function(statistics) {
       let chartCanvas = document.getElementById("player-statistics");
       let playerChart = new Chart(chartCanvas, {
@@ -31,9 +34,15 @@ export default {
   mounted() {
     this.formChart(this.winningStatistics);
   },
+  /**
+   * Received the loss and win count to dynamically update the chart
+   */
   props: ["lossCount", "winCount"],
   watch: {
     immediate: true,
+    /**
+     * Reflect loss count in the chart
+     */
     lossCount: function() {
       this.updatedLossCount = this.$props.lossCount;
       this.winningStatistics.data.datasets[0].data[2] = this.updatedLossCount;
@@ -41,6 +50,9 @@ export default {
         10 - (this.updatedLossCount + this.updatedWinCount);
       this.formChart(this.winningStatistics);
     },
+    /**
+     * Reflect win count in the chart
+     */
     winCount: function() {
       this.updatedWinCount = this.$props.winCount;
       this.winningStatistics.data.datasets[0].data[1] = this.updatedWinCount;

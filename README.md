@@ -11,7 +11,7 @@ The following references below have been used for a usccessful completion of the
 
 [How to handle clicks on canvas](https://www.tutorialspoint.com/How-do-I-add-a-simple-onClick-event-handler-to-an-HTML5-canvas-element)
 
-[COmmunication between Vue sibling components](https://forum.vuejs.org/t/communication-between-sibling-components/29976/2)
+[Communication between Vue sibling components](https://forum.vuejs.org/t/communication-between-sibling-components/29976/2)
 
 [How to access prop value in a method](https://forum.vuejs.org/t/accessing-prop-value-in-created-method/26630)
 

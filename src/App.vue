@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!-- Landing page -->
     <div id="landing" class="input-group mb-3 col-md-6" v-if="!isAuthenticated">
       <h3>Let's play Tic Tac Toe</h3>
       <div id="spacer1"></div>
@@ -26,6 +27,7 @@
       <NavBarComponent v-bind:username="username" />
       <b-container id="gameContainer">
         <b-row>
+          <!-- These child components communicate through the parent -->
           <Home v-on:update-win="updateWin($event)" v-on:update-loss="updateLoss($event)" />
           <div id="spacer2"></div>
           <ChartComponent v-bind:winCount="winCount" v-bind:lossCount="lossCount"/>
@@ -52,12 +54,19 @@ export default {
       isAuthenticated: false,
       username: "",
       showAlert: false,
+      /**
+       * Dynamically bind to give useful message to user
+       */
       alertFailure: "alert alert-danger col-md-12",
       winCount: 0,
       lossCount: 0
     };
   },
   methods: {
+    /**
+     * Disable the button that allows playing the game
+     * and give hint to user
+     */
     playGame: function() {
       if (this.username.length >= 1) {
         this.isAuthenticated = true;
@@ -68,6 +77,9 @@ export default {
         document.getElementById("playButton").disabled = true;
       }
     },
+    /**
+     * receive message from a child which will be propagated to another child
+     */
     updateWin: function(winCount) {
       this.winCount = winCount;
     },
@@ -76,6 +88,9 @@ export default {
     }
   },
   watch: {
+    /**
+     * User won't be allowed to play the game with an invalid name
+     */
     username: function() {
       if (this.username.length >= 1) {
         this.playGame();

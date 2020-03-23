@@ -10,6 +10,9 @@
 
 <script>
 export default {
+  /**
+   * Used to identify user by name
+   */
   props: ["username"]
 };
 </script>
