@@ -11,7 +11,15 @@
         id="user"
       />
       <div class="input-group-append">
-        <button class="btn btn-outline-secondary" type="button" @click="playGame">Let's play</button>
+        <button
+          class="btn btn-outline-secondary"
+          id="playButton"
+          type="button"
+          @click="playGame"
+        >Let's play</button>
+      </div>
+      <div v-if="showAlert">
+        <div :class="alertFailure" role="alert">Please enter a valid name</div>
       </div>
     </div>
     <div v-else>
@@ -42,12 +50,28 @@ export default {
   data: function() {
     return {
       isAuthenticated: false,
-      username: ""
+      username: "",
+      showAlert: false,
+      alertFailure: "alert alert-danger col-md-12"
     };
   },
   methods: {
     playGame: function() {
-      this.isAuthenticated = true;
+      if (this.username.length >= 1) {
+        this.isAuthenticated = true;
+        this.showAlert = false;
+        document.getElementById("playButton").disabled = false;
+      } else {
+        this.showAlert = true;
+        document.getElementById("playButton").disabled = true;
+      }
+    }
+  },
+  watch: {
+    username: function() {
+      if (this.username.length >= 1) {
+        this.playGame();
+      }
     }
   }
 };

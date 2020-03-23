@@ -1,6 +1,6 @@
 <template>
   <div id="board">
-    <canvas id="game-board"></canvas>
+    <canvas id="game-board" @mousedown="boxClicked"></canvas>
   </div>
 </template>
 
@@ -9,7 +9,12 @@
 export default {
   data: function() {
     return {
-      squares: [[], [], [], [], [], [], [], [], []]
+      squares: [[], [], [], [], [], [], [], [], []],
+      clickCount: [0, 0, 0, 0, 0, 0, 0, 0, 0],
+      characters: ["", "", "", "", "", "", "", "", ""],
+      xCoordinate: 0,
+      yCoordinate: 0,
+      won: false
     };
   },
   methods: {
@@ -23,6 +28,7 @@ export default {
       this.drawVertical(boardContext, square * 2, 0, 300);
       this.drawHorizontal(boardContext, square * 0.5, 0, 300);
       this.drawHorizontal(boardContext, square, 0, 300);
+      this.drawHorizontal(boardContext, square * 1.5, 0, 300);
       this.populateLocation(100, 50);
     },
     drawVertical: function(boardContext, square, beginPoint, endPoint) {
@@ -47,6 +53,137 @@ export default {
       this.squares[6] = [height * 2, width * 0, width * 1, height * 3];
       this.squares[7] = [height * 2, width * 1, width * 2, height * 3];
       this.squares[8] = [height * 2, width * 2, width * 3, height * 3];
+    },
+    boxClicked: function(event) {
+      this.xCoordinate = event.offsetX;
+      this.yCoordinate = event.offsetY;
+
+      let rand = Math.floor(Math.random() * 10);
+
+      for (let i = 0; i < this.squares.length; i++) {
+        if (
+          this.xCoordinate <= this.squares[i][2] &&
+          this.yCoordinate <= this.squares[i][3]
+        ) {
+          if (rand < 5) {
+            this.drawCharacters(
+              "X",
+              this.squares[i][1],
+              this.squares[i][3],
+              this.squares[i][1],
+              this.squares[i][0]
+            );
+            this.characters[i] = "X";
+            this.checkwin();
+            this.checkGameOver();
+          } else {
+            this.drawCharacters(
+              "O",
+              this.squares[i][1],
+              this.squares[i][3],
+              this.squares[i][1],
+              this.squares[i][0]
+            );
+            this.characters[i] = "O";
+            this.checkwin();
+            this.checkGameOver();
+          }
+          this.clickCount[i]++;
+          break;
+        }
+      }
+    },
+    drawCharacters: function(
+      characterToDraw,
+      xLocation,
+      yLocation,
+      deleteX,
+      deleteY
+    ) {
+      let canvas = document.getElementById("game-board");
+      let boardContext = canvas.getContext("2d");
+      boardContext.fillStyle = "#ffffff";
+      boardContext.fillRect(deleteX + 1, deleteY + 1, 20, 48);
+      boardContext.save();
+      boardContext.font = "20px Georgia";
+      boardContext.fillStyle = "#000000";
+      boardContext.fillText(characterToDraw, xLocation, yLocation);
+      boardContext.save();
+    },
+    clearCanvas: function() {
+      let canvas = document.getElementById("game-board");
+      let boardContext = canvas.getContext("2d");
+      boardContext.fillStyle = "#ffffff";
+      boardContext.fillRect(0, 0, 300, 150);
+      boardContext.save();
+
+      for (let i = 0; i < this.characters.length; i++) {
+        this.characters[i] = null;
+      }
+
+      this.won = false;
+    },
+    checkwin: function() {
+      this.checkRowWins(0);
+      this.checkRowWins(3);
+      this.checkRowWins(6);
+      this.checkColumnWins(0);
+      this.checkColumnWins(1);
+      this.checkColumnWins(2);
+      this.checkDiagonalWins(0);
+      this.checkDiagonalWins(2);
+
+      if (this.won) {
+        alert("Congratulations, you won");
+        this.clearCanvas();
+        this.drawBoard();
+      }
+    },
+    checkRowWins: function(column) {
+      if (
+        this.characters[column] &&
+        this.characters[column] == this.characters[column + 1] &&
+        this.characters[column + 1] == this.characters[column + 2] &&
+        this.characters[column] == this.characters[column + 2]
+      ) {
+        this.won = true;
+      }
+    },
+    checkColumnWins: function(row) {
+      if (
+        this.characters[row] &&
+        this.characters[row] == this.characters[row + 3] &&
+        this.characters[row + 3] == this.characters[row + 6] &&
+        this.characters[row] == this.characters[row + 6]
+      ) {
+        this.won = true;
+      }
+    },
+    checkDiagonalWins: function(start) {
+      if (
+        (this.characters[start] &&
+          this.characters[start] == this.characters[start + 4] &&
+          this.characters[start + 4] == this.characters[start + 8] &&
+          this.characters[start] == this.characters[start + 8]) ||
+        (this.characters[start] != null &&
+          this.characters[start] == this.characters[start + 2] &&
+          this.characters[start + 2] == this.characters[start + 4] &&
+          this.characters[start] == this.characters[start + 4])
+      )
+        this.won = true;
+    },
+    checkGameOver: function() {
+      let filledCount = 0;
+      for (let i = 0; i < this.characters.length; i++) {
+        if (this.characters[i]) {
+          filledCount += 1;
+        }
+      }
+      if (filledCount > 8 && !this.won) {
+        alert("Game over, you lost! Click 'Okay' to play again");
+        this.clearCanvas();
+        this.drawBoard();
+      }
     }
   },
   mounted() {
@@ -58,9 +195,5 @@ export default {
 <style scoped>
 #board {
   padding-left: 50px;
-}
-#game-board {
-  width: 300px;
-  height: 300px;
 }
 </style>
