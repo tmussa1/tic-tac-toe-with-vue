@@ -41,20 +41,30 @@ export default {
   watch: {
     immediate: true,
     /**
-     * Reflect loss count in the chart
+     * Reflect loss count in the chart. The sum of wins and losses
+     * can be a maximum of 10. Possible attempts will be aminimum of 0
      */
     lossCount: function() {
-      this.updatedLossCount = this.$props.lossCount;
+      if (this.updatedWinCount + this.updatedLossCount <= 10) {
+        this.updatedLossCount = this.$props.lossCount;
+      }
+
       this.winningStatistics.data.datasets[0].data[2] = this.updatedLossCount;
       this.winningStatistics.data.datasets[0].data[0] =
-        10 - (this.updatedLossCount + this.updatedWinCount);
+        10 - (this.updatedLossCount + this.updatedWinCount) > 0
+          ? 10 - (this.updatedLossCount + this.updatedWinCount)
+          : 0;
       this.formChart(this.winningStatistics);
     },
     /**
-     * Reflect win count in the chart
+     * Reflect win count in the chart. The sum of wins and losses
+     * can be a maximum of 10. Possible attempts will be aminimum of 0
      */
     winCount: function() {
-      this.updatedWinCount = this.$props.winCount;
+      if (this.updatedWinCount + this.updatedLossCount <= 10) {
+        this.updatedWinCount = this.$props.winCount;
+      }
+
       this.winningStatistics.data.datasets[0].data[1] = this.updatedWinCount;
       this.winningStatistics.data.datasets[0].data[0] =
         10 - (this.updatedLossCount + this.updatedWinCount) > 0

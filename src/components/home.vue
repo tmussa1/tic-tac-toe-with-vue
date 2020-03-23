@@ -2,7 +2,7 @@
   <div id="board">
     <canvas id="game-board" @mousedown="boxClicked"></canvas>
     <!-- Shows different alerts to guide the user through the game -->
-    <b-modal id="win-modal">Congratulations, you won! Click okay to play again!</b-modal>
+    <b-modal id="win-modal" v-if="won">Congratulations, you won! Click okay to play again!</b-modal>
     <b-modal id="game-over-modal">Game over! click okay to play again!</b-modal>
     <b-modal id="maximum-attempts-modal">You can keep playing but you won't get any credits!</b-modal>
   </div>
@@ -62,7 +62,7 @@ export default {
       boardContext.stroke();
     },
     /**
-     * Helper method to draw the horizontal lines 
+     * Helper method to draw the horizontal lines
      */
     drawHorizontal: function(boardContext, square, beginPoint, endPoint) {
       boardContext.beginPath();
@@ -94,7 +94,7 @@ export default {
       let rand = Math.floor(Math.random() * 10);
 
       /**
-       * User gets X or O randomly 
+       * User gets X or O randomly
        */
       for (let i = 0; i < this.squares.length; i++) {
         if (
@@ -191,9 +191,9 @@ export default {
        * Emit event to the parent after a win. ALso redraw the canvas to start fresh
        */
       if (this.won) {
-        this.$bvModal.show("win-modal");
         this.winningCount += 1;
         this.$emit("update-win", this.winningCount);
+        this.$bvModal.show("win-modal");
         this.clearCanvas();
         this.drawBoard();
       }
@@ -233,7 +233,8 @@ export default {
           this.characters[start] == this.characters[start + 4] &&
           this.characters[start + 4] == this.characters[start + 8] &&
           this.characters[start] == this.characters[start + 8]) ||
-        (this.characters[start] != null &&
+        (this.characters[start] &&
+          start >= 2 &&
           this.characters[start] == this.characters[start + 2] &&
           this.characters[start + 2] == this.characters[start + 4] &&
           this.characters[start] == this.characters[start + 4])
