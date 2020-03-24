@@ -13,6 +13,8 @@ The following references below have been used for a usccessful completion of the
 
 [Communication between Vue sibling components](https://forum.vuejs.org/t/communication-between-sibling-components/29976/2)
 
+[Bootstrap Vue Modal](https://bootstrap-vue.js.org/docs/components/modal/)
+
 [How to access prop value in a method](https://forum.vuejs.org/t/accessing-prop-value-in-created-method/26630)
 
 [How to listen to prop changes](https://stackoverflow.com/questions/44584292/how-to-listen-for-props-changes)

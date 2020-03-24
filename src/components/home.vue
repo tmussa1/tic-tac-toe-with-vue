@@ -2,9 +2,20 @@
   <div id="board">
     <canvas id="game-board" @mousedown="boxClicked"></canvas>
     <!-- Shows different alerts to guide the user through the game -->
-    <b-modal id="win-modal" v-if="won">Congratulations, you won! Click okay to play again!</b-modal>
-    <b-modal id="game-over-modal">Game over! click okay to play again!</b-modal>
-    <b-modal id="maximum-attempts-modal">You can keep playing but you won't get any credits!</b-modal>
+    <b-modal
+      id="win-modal"
+      :body-bg-variant="alertSuccess"
+    >Congratulations, you won! Click okay to play again!</b-modal>
+    <b-modal
+      id="game-over-modal"
+      :body-bg-variant="alertGameOver"
+    >Game over! click okay to play again!</b-modal>
+    <b-modal
+      id="maximum-attempts-modal"
+      :body-bg-variant="alertTooManyAttempts"
+    >You can keep playing but you won't get any credits!</b-modal>
+    <div id="spacer"></div>
+    <b-button variant="danger" @click="resetGame">Reset the Game</b-button>
   </div>
 </template>
 
@@ -32,7 +43,13 @@ export default {
        */
       won: false,
       winningCount: 0,
-      lossCount: 0
+      lossCount: 0,
+      /**
+       * Dynamically binds feedback color
+       */
+      alertGameOver: "warning",
+      alertTooManyAttempts: "danger",
+      alertSuccess: "success"
     };
   },
   methods: {
@@ -191,9 +208,9 @@ export default {
        * Emit event to the parent after a win. ALso redraw the canvas to start fresh
        */
       if (this.won) {
+        this.$bvModal.show("win-modal");
         this.winningCount += 1;
         this.$emit("update-win", this.winningCount);
-        this.$bvModal.show("win-modal");
         this.clearCanvas();
         this.drawBoard();
       }
@@ -261,6 +278,14 @@ export default {
         this.clearCanvas();
         this.drawBoard();
       }
+    },
+    resetGame: function() {
+      this.clearCanvas();
+      this.drawBoard();
+      this.lossCount = 0;
+      this.winningCount = 0;
+      this.$emit("update-loss", this.winningCount);
+      this.$emit("update-win", this.winningCount);
     }
   },
   /**
@@ -293,5 +318,9 @@ export default {
 <style scoped>
 #board {
   padding-left: 50px;
+}
+#spacer {
+  margin-top: 50px;
+  padding-left: 30px;
 }
 </style>

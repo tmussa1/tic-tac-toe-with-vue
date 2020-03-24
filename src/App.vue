@@ -30,7 +30,7 @@
           <!-- These child components communicate through the parent -->
           <Home v-on:update-win="updateWin($event)" v-on:update-loss="updateLoss($event)" />
           <div id="spacer2"></div>
-          <ChartComponent v-bind:winCount="winCount" v-bind:lossCount="lossCount"/>
+          <ChartComponent v-bind:winCount="winCount" v-bind:lossCount="lossCount" />
         </b-row>
       </b-container>
     </div>
@@ -106,7 +106,7 @@ export default {
   margin-left: 300px;
 }
 #spacer2 {
-  padding-left: 200px;
+  padding-left: 100px;
 }
 #spacer1 {
   padding-left: 100px;
