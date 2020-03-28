@@ -38,9 +38,9 @@
 </template>
 
 <script>
-import Home from "./components/home.vue";
-import ChartComponent from "./components/chart.vue";
-import NavBarComponent from "./components/navBar";
+import Home from "./components/Home.vue";
+import ChartComponent from "./components/Chart.vue";
+import NavBarComponent from "./components/NavBar";
 
 export default {
   name: "App",
